@@ -32,38 +32,24 @@ import java.util.logging.Logger;
 public class UbuntuKernelCleaner
 {
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args)
-    {
-        try
-          {
-            ArrayList<String> list;
-            list = UbuntuKernelCleaner.getInstalledKernels();
-            for (String line : list)
-              {
-                System.out.println(line);
-              }
-            Runtime runtime = Runtime.getRuntime();
-            runtime.exec("gedit");
-          } catch (IOException ex)
-          {
-            Logger.getLogger(UbuntuKernelCleaner.class.getName()).log(Level.SEVERE, null, ex);
-          }
-
-    }
-
+   /**
+    * Removes selected installed kernels from the machine
+    * 
+    * @param kernelsToRemove
+    * @return The result of the kernel deletion process
+    */
     public String removeInstalledKernels(List<String> kernelsToRemove)
     {
         String executionResult;
-        String command[] = new String[kernelsToRemove.size()+3];
+        String command[] = new String[kernelsToRemove.size()+4];
         command[0] = "pkexec";
-        command[1] ="apt";
-        command[2]="purge";
+        command[1] = "apt";
+        command[2]= "purge";
+        command[3]= "--yes";
+        
         for(String kernel : kernelsToRemove)
           {
-            for (int i = 3; i < kernelsToRemove.size()+3; i++)
+            for (int i = 4; i < kernelsToRemove.size()+4; i++)
               {
                 command[i]=kernel;
               }
